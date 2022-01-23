@@ -6,7 +6,6 @@ const notesPath = path.join(__dirname, 'db.json')
 
 async function addNote (title) {
   const notes = await getNotes()
-
   const note = {
     title,
     id: Date.now().toString()
@@ -14,7 +13,7 @@ async function addNote (title) {
 
   notes.push(note)
   await fs.writeFile(notesPath, JSON.stringify(notes))
-  console.log(chalk.bgGreen('Note was added'))
+  // console.log(chalk.bgGreen('Note was added'))
 }
 
 async function removeNote (id) {
@@ -35,16 +34,9 @@ async function updateNote (id, title) {
 }
 
 async function getNotes () {
+  // return require('./db.json')
   const notes = await fs.readFile(notesPath, { encoding: 'utf8'})
   return Array.isArray(JSON.parse(notes)) ? JSON.parse(notes) : []
-}
-
-async function printNotes () {
-  const notes = await getNotes()
-  console.log(chalk.bgBlue('Here is the list of notes: ')) 
-  notes.forEach(note => {
-    console.log(chalk.blue(note.id,':', note.title))
-  })
 }
 
 module.exports = {
